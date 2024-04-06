@@ -1,3 +1,4 @@
+use std::path::Path;
 use duckdb::{params, Connection};
 
 pub struct Logger {
@@ -5,9 +6,19 @@ pub struct Logger {
 }
 
 impl Logger {
+    // Existing constructor for regular use
     pub fn new() -> Self {
-        let conn = Connection::open("/usr/local/var/logs/frouter.db").unwrap();
-        conn.execute("CREATE TABLE IF NOT EXISTS logs (source TEXT, destination TEXT, filename TEXT, timestamp TEXT, filehash TEXT)", params![]).unwrap();
+        Self::with_path("/usr/local/var/logs/frouter.db")
+    }
+
+    // New constructor for testing or other purposes where a custom path is needed
+    pub fn with_path<P: AsRef<Path>>(path: P) -> Self {
+        let conn = Connection::open(path).expect("Failed to open database");
+        conn.execute(
+            "CREATE TABLE IF NOT EXISTS logs (source TEXT, destination TEXT, filename TEXT, timestamp TEXT, filehash TEXT)",
+            params![],
+        )
+            .expect("Failed to create logs table");
         Logger { conn }
     }
 
@@ -15,6 +26,7 @@ impl Logger {
         self.conn.execute("BEGIN", params![])?;
         Ok(())
     }
+
 
     pub fn end_transaction(&self) -> Result<(), duckdb::Error> {
         self.conn.execute("COMMIT", params![])?;
@@ -40,11 +52,18 @@ impl Logger {
 #[cfg(test)]
 mod db_tests {
     use super::*;
+    use tempfile::TempDir;
 
     #[test]
     fn test_insert_log() {
-        let logger = Logger::new(); // Assumes Logger::new doesn't panic when a DB can't be opened
-        logger.start_transaction().unwrap();
+        let temp_dir = TempDir::new().expect("Failed to create a temporary directory");
+        let db_path = temp_dir.path().join("frouter_test.db");
+
+        // Use Logger::with_path to create a logger instance with a temporary database
+        let logger = Logger::with_path(&db_path);
+
+        // Start a transaction
+        logger.start_transaction().expect("Failed to start transaction");
 
         let result = logger.insert_log_without_commit(
             "source/path",
@@ -56,8 +75,9 @@ mod db_tests {
 
         assert!(result.is_ok());
 
-        // Verify entry is inserted correctly, possibly by querying the `logs` table.
-        // Cleanup might involve rolling back the transaction or deleting the test database file.
+        // Optionally, verify the inserted log...
+
+        // Don't forget to end the transaction or roll it back as needed
     }
 }
 

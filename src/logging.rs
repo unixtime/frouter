@@ -35,12 +35,15 @@ Set this to true to enable JSON logging for troubleshooting.
 */
 const LOG_TO_JSON: bool = false;
 
+// Assume these paths are obtained from a configuration file or environment variables
+static ERROR_LOG_PATH: &str = "/usr/local/var/logs/error.log";
+static FILE_EVENT_LOG_PATH: &str = "/usr/local/var/logs/file_event_log.json";
+
 pub fn log_error_to_file(error_type: &str, message: &str) -> std::io::Result<()> {
     let log = ErrorLog::new(error_type, message);
     let error_string = serde_json::to_string_pretty(&log)?;
 
-    // Append the error to the log file
-    let mut file = OpenOptions::new().append(true).open("/usr/local/var/logs/error.log")?;
+    let mut file = OpenOptions::new().append(true).open(ERROR_LOG_PATH)?;
     file.write_all(error_string.as_bytes())?;
     file.write_all(b"\n")?;
 
@@ -59,8 +62,8 @@ pub fn log_file_event(source_path: &Path, target_path: &Path, filehash: &str) {
             filehash: filehash.to_string(),
         };
 
-        let log_path = "/usr/local/var/logs/file_event_log.json";
-        if let Err(e) = append_log_to_json(log_path, &log) {
+        // Use FILE_EVENT_LOG_PATH instead of hard-coded path
+        if let Err(e) = append_log_to_json(FILE_EVENT_LOG_PATH, &log) {
             eprintln!("Failed to append log to JSON: {}", e);
         }
     } else {
@@ -88,6 +91,7 @@ fn append_log_to_json<P: AsRef<Path>>(path: P, log: &FileEventLog) -> std::io::R
     logs.push(log.clone());
 
     let json_string = serde_json::to_string_pretty(&logs)?;
+    // Use the path parameter, which is now FILE_EVENT_LOG_PATH from the caller
     fs::write(path, json_string)?;
 
     Ok(())
