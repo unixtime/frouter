@@ -92,6 +92,8 @@ cargo run
 
 ### Configuration
 
+The frouter creates the `TOML` configuration file under `/Users/USERNAME/.config/frouter/config.toml`
+
 ```toml
 [directories]
 downloads = "~/Downloads"
