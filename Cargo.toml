@@ -1,0 +1,19 @@
+[package]
+name = "frouter"
+version = "1.0.2"
+edition = "2021"
+description = "File Router"
+authors = ["Hassan El-Masri <hassan@unixtime.com>"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+chrono = { version = "0.4.37", features = ["serde"] }
+dirs = "5.0.1"
+duckdb = { version = "0.10.1", features = ["csv", "json", "chrono", "parquet", "serde_json"] }
+notify = "6.1.1"
+serde = { version = "1.0.197", features = ["derive"] }
+serde_derive = "1.0.197"
+serde_json = "1.0.115"
+sha2 = "0.10.8"
+toml = "0.8.12"

@@ -1,0 +1,61 @@
+[directories]
+downloads = "~/Downloads"
+downloads_enabled = true
+documents = "~/Documents"
+documents_enabled = true
+
+
+[[extensions]]
+name = "pdf"
+path = "/Volumes/OSX3/PDF"
+enabled = true
+
+[[extensions]]
+name = "docx"
+path = "/Volumes/OSX3/Docs"
+enabled = true
+
+[[extensions]]
+name = "jpg"
+path = "/Volumes/OSX3/Images/jpg"
+enabled = true
+
+[[extensions]]
+name = "png"
+path = "/Volumes/OSX3/Images/png"
+enabled = true
+
+[[extensions]]
+name = "gif"
+path = "/Volumes/OSX3/Images/gif"
+enabled = true
+
+[[extensions]]
+name = "zip"
+path = "/Volumes/OSX3/Archives/zip"
+enabled = true
+
+[[extensions]]
+name = "tar"
+path = "/Volumes/OSX3/Archives/tar"
+enabled = true
+
+[[extensions]]
+name = "gz"
+path = "/Volumes/OSX3/Archives/gz"
+enabled = true
+
+[[extensions]]
+name = "bz2"
+path = "/Volumes/OSX3/Archives/bz2"
+enabled = true
+
+[[extensions]]
+name = "xz"
+path = "/Volumes/OSX3/Archives/xz"
+enabled = true
+
+[[extensions]]
+name = "iso"
+path = "/Volumes/OSX3/Archives/iso"
+enabled = true
