@@ -230,3 +230,26 @@ pub fn get_extension_from_config<'a>(
         })
     })
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs;
+    use std::path::PathBuf;
+
+    #[test]
+    fn test_ensure_directory_exists() {
+        // Setup: Define a path for the test directory
+        let test_dir = PathBuf::from("test_dir");
+
+        // Exercise: Attempt to ensure the test directory exists
+        assert!(ensure_directory_exists(&test_dir).is_ok());
+
+        // Verify: Check if the directory now exists
+        assert!(test_dir.exists());
+
+        // Teardown: Clean up the test directory after the test
+        fs::remove_dir_all(test_dir).unwrap();
+    }
+}
