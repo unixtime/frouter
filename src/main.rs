@@ -6,6 +6,7 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::sync::mpsc::{self, RecvError};
 
+
 mod file_utils;
 pub mod hash_compute;
 mod logging;
@@ -18,6 +19,9 @@ use error::FileRouterError;
 use std::error::Error;
 
 mod db_utils;
+mod test_config;
+// db_utils.rs
+
 use db_utils::Logger;
 
 use std::collections::HashSet;
