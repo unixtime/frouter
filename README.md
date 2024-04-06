@@ -1,5 +1,8 @@
 # Rust File Router
 
+![File Router](media/FRouter-Logo.png)
+
+
 `FRouter` is a robust and efficient file routing tool developed in Rust, designed to automate the organization, hashing, and logging of files across different directories based on user-defined rules. Leveraging Rust's performance, safety, and concurrency, FRouter offers a high-performance solution to manage file systems more effectively.
 
 ```
