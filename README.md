@@ -9,9 +9,9 @@
                  |
        +---------+----------+
        |                    |
-+------v------+       +------v------+
-| File Watcher |       | Configuration |
-+--------------+       +--------------+
++------v------+       +------v--------+
+| File Watcher |      | Configuration |
++--------------+      +---------------+
        |                     |
        |                     |
        |              Reads/Reloads
@@ -29,10 +29,10 @@ Events |
        |                  | Uses
        |     +------------+-----------+
        |     |                        |
-       | +---v---+              +-----v-----+
-       | | SHA256 |              | File I/O |
-       | | Hash   |              | (Copy/Delete) |
-       | +-------+              +-----------+
+       | +---v----+             +-------v-------+
+       | | SHA256 |             | File I/O      |
+       | | Hash   |             | (Copy/Delete) |
+       | +--------+             +---------------+
        |
        |
 +------v------+
@@ -44,7 +44,7 @@ Events |
 Key Components:
 * File Watcher: Monitors specified directories for any changes (e.g., file additions, modifications). It triggers events based on filesystem activities.
 * Configuration (config.toml): Contains the rules and settings for how files should be processed and routed. This includes target directories for different file types, whether SHA256 hashing is used, and logging preferences.
-* Event Handler & File Processing Logic: Receives filesystem events from the File Watcher. It reads the configuration to determine how to process and route files (e.g., where to move files based on their extensions). It also handles file hashing to avoid duplicate processing and ensures that only unique files are routed.
+* Event Handler & File Processing Logic: Receives filesystem events from the File Watcher. It reads the configuration to determine how to process and route files (e.g., where to move files based on their extensions). It also handles file hashing to avoid duplicate processing and ensures that unique files are routed.
 * SHA256 Hash: Used to compute unique hashes for files to manage duplicates effectively.
 * File I/O (Copy/Delete): Performs the actual file operations, like copying files to their target directories as specified in the configuration and then deleting them from their original location if required.
 * Logging (File & DB): Logs events and errors either to a file or a database, depending on the configuration settings. This includes logging file routing actions, errors encountered during processing, and system messages.
@@ -53,7 +53,7 @@ Key Components:
 
 ## Features
 - **Customizable File Routing**: Users can set up rules in a configuration file to automate the routing of files to specific directories based on their extensions, ensuring organized and efficient file storage.
-- **SHA256 Hashing for Integrity**: Implements SHA256 hashing to ensure file integrity by checking for duplicates, guaranteeing that only unique files are routed to their specified locations.
+- **SHA256 Hashing for Integrity**: Implements SHA256 hashing to ensure file integrity by checking for duplicates, guaranteeing that unique files are routed to their specified locations.
 - **Comprehensive Logging**: Detailed logs for both file events and errors are maintained, supporting JSON and database logging to facilitate easy monitoring and auditing of the routing process.
 - **Case-Insensitive File Extension Handling**: Treats file extensions in a case-insensitive manner, ensuring consistent routing regardless of extension case variations.
 - **Dynamic Configuration**: Dynamically loads configuration files, allowing for flexible specification of routing rules and directory paths. FRouter also supports the generation of a default configuration if none is present.
@@ -73,7 +73,7 @@ With the integration of DuckDB, FRouter can facilitate fast, on-the-fly analysis
 
 ## Getting Started
 
-> This app tested on macOS.
+> This app was tested on macOS.
 
 To start using FRouter, first ensure you have the [Rust toolchain](https://www.rust-lang.org/tools/install) installed on your machine. Then, follow these steps:
 
