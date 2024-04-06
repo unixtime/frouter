@@ -1,3 +1,5 @@
+![FIle Router workflow](https://github.com/unixtime/frouter/actions/workflows/rust.yml/badge.svg)
+
 # Rust File Router
 
 ![File Router](media/FRouter-Logo.png)
